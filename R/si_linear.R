@@ -28,7 +28,9 @@ for (i in 1:d)
   r_2 <- m_s$r.squared
   s_i <- rbind(s_i,r_2)
 }
+
 row.names(s_i) <- NULL
+colnames(s_i) <- "s_i"
 return(s_i)
 }
   
