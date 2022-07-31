@@ -23,7 +23,7 @@ si_linear_exc_vif <- function(x,avg_type = "simple",vif_threshold = 4.5)
   
   # creating regression model using all the inputs and calculating VIF
   m <- lm(y$ci~.,data=x)
-  vif_calc <- vif(m)
+  suppressWarnings({ vif_calc <- vif(m) })
   
   vif_index <- which(as.matrix(vif_calc)>vif_threshold)
   
@@ -31,6 +31,7 @@ si_linear_exc_vif <- function(x,avg_type = "simple",vif_threshold = 4.5)
   
   d <- dim(x_new)[2]
   s_i_exc_vif <- NULL
+  we <- NULL
   
   for (i in 1:d)
   {
@@ -39,9 +40,13 @@ si_linear_exc_vif <- function(x,avg_type = "simple",vif_threshold = 4.5)
     m_s <- summary(m_i)
     r_2 <- m_s$r.squared
     s_i_exc_vif <- rbind(s_i_exc_vif,r_2)
+    w <- 1 - r_2
+    we <- rbind(we,w)
   }
   
+  initial_weights <- we/sum(we)
+  row.names(initial_weights) <- NULL
   colnames(s_i_exc_vif) <- "s_i_exc_vif"
   row.names(s_i_exc_vif) <- NULL
-  return(s_i_exc)
+  return(list(vif_calc,vif_index, s_i_exc_vif,initial_weights))
 }
