@@ -45,5 +45,3 @@ si_linear_exc_vif <- function(x,avg_type = "simple",vif_threshold = 4.5)
   row.names(s_i_exc_vif) <- NULL
   return(s_i_exc)
 }
-
-

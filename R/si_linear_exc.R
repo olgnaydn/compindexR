@@ -34,5 +34,3 @@ si_linear_exc <- function(x,avg_type = "simple")
   row.names(s_i_exc) <- NULL
   return(s_i_exc)
 }
-
-
