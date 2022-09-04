@@ -13,7 +13,7 @@ si_linear_exc <- function(x,avg_type = "simple")
   for (i in 1:d)
   {
     xx <- x[,-i]
-    y<- calc_average(x,avg_type)
+    #y<- calc_average(xx,avg_type)
     m <- lm(y$ci~as.matrix(xx))
     m_s <- summary(m)
     r_2 <- m_s$r.squared
