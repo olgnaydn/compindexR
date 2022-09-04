@@ -8,3 +8,6 @@ Description: TBA
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
+URL: https://github.com/olgnaydn/ciaor
+Depends: R (>= 4.0.5), MASS (== 7.3.56)
+RoxygenNote: 7.1.1

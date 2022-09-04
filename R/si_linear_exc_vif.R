@@ -1,8 +1,9 @@
 si_linear_exc_vif <- function(x,avg_type = "simple",vif_threshold = 4.5)
 {
-  
-  ### Requirement is MASS package ###
-  
+
+  ## Dependencies
+  #' @import MASS
+
   # calculating composite index (ci)
   if(avg_type == "simple")
   {
@@ -14,27 +15,27 @@ si_linear_exc_vif <- function(x,avg_type = "simple",vif_threshold = 4.5)
   }
   else if(avg_type == "harmonic")
   {
-    y <- apply(x, 1, function(x) (1/mean(1/x))) 
+    y <- apply(x, 1, function(x) (1/mean(1/x)))
   }
-  
+
   # tidying up
   row.names(y) <- NULL
   colnames(y) <- c("ci")
-  
+
   # creating regression model using all the inputs and calculating VIF
   m <- lm(y$ci~.,data=x)
   suppressWarnings({ vif_calc <- vif(m) })
-  
+
   #TODO: Add range for VIF
-  
+
   vif_index <- which(as.matrix(vif_calc)>vif_threshold)
-  
+
   x_new <- x[-vif_index]
-  
+
   d <- dim(x_new)[2]
   s_i_exc_vif <- NULL
   we <- NULL
-  
+
   for (i in 1:d)
   {
     xx <- x_new[,-i]
@@ -45,7 +46,7 @@ si_linear_exc_vif <- function(x,avg_type = "simple",vif_threshold = 4.5)
     w <- 1 - r_2
     we <- rbind(we,w)
   }
-  
+
   initial_weights <- we/sum(we)
   row.names(initial_weights) <- NULL
   colnames(s_i_exc_vif) <- "s_i_exc_vif"
