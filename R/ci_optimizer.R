@@ -22,4 +22,12 @@ ci_optimizer <- function(x)
   #optim(x0, objective_function, method = "Nelder-Mead")
   
   #TODO: Test the code!
+  
+  # weights sum up to 1, positive.
+    # lb = 0.001
+    # ub = 1
+  # no threshold will be added for Si
+  # run optimization till normalized Si will be equal (or defined by the user - future functionality)
+    # Remove variables with highest Si till the moment that Sis are equal.
+
 }

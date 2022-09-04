@@ -25,6 +25,8 @@ si_linear_exc_vif <- function(x,avg_type = "simple",vif_threshold = 4.5)
   m <- lm(y$ci~.,data=x)
   suppressWarnings({ vif_calc <- vif(m) })
   
+  #TODO: Add range for VIF
+  
   vif_index <- which(as.matrix(vif_calc)>vif_threshold)
   
   x_new <- x[-vif_index]
