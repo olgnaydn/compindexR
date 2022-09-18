@@ -1,4 +1,4 @@
-# # compindexR - compindexR: An R package for calculating composite indicators
+# compindexR - compindexR: An R package for calculating composite indicators
 
 
 - Please make sure that devtools package is installed.
