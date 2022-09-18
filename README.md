@@ -1,5 +1,5 @@
-# ciao_r
-R version of ciao which is a MATLAB package
+# # compindexR - compindexR: An R package for calculating composite indicators
+
 
 - Please make sure that devtools package is installed.
 - To install the package directly from Github, use following command. 
