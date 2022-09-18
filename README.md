@@ -1,7 +1,8 @@
 # ciao_r
 R version of ciao which is a MATLAB package
 
-To install the package directly from Github, use following command. Please make sure that devtools package is installed.
+- Please make sure that devtools package is installed.
+- To install the package directly from Github, use following command. 
 
 ```
 devtools::install_github("olgnaydn/ciaor",
@@ -10,6 +11,6 @@ devtools::install_github("olgnaydn/ciaor",
                           )
 ```
 
-To get personal access token, visit this url: https://github.com/settings/tokens
+To get personal access token, please follow the setups shown here. visit this url: https://github.com/settings/tokens
 
 
