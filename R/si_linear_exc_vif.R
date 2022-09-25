@@ -20,8 +20,7 @@ si_linear_exc_vif <- function(x,avg_type = "simple",vif_threshold = 4.5)
     {
       x_new <- x
     }
-
-
+  y_new<- calc_average(x_new,avg_type)
   d <- dim(x_new)[2]
   si_vif <- NULL
   we <- NULL
@@ -30,18 +29,18 @@ si_linear_exc_vif <- function(x,avg_type = "simple",vif_threshold = 4.5)
   {
     xx <- x_new[,-i]
     #y<- calc_average(xx,avg_type)
-    m_i <- lm(y$ci~as.matrix(xx))
+    m_i <- lm(y_new$ci~as.matrix(xx))
     m_s <- summary(m_i)
     r_2 <- m_s$r.squared
     si_vif <- rbind(si_vif,r_2)
     w <- 1 - r_2
     we <- rbind(we,w)
   }
-
-  si_vif_reverse <- we/sum(we)
-  row.names(si_vif_reverse) <- NULL
-  row.names(si_vif) <- NULL
-  final_lst <- list(vif_calc,vif_index, si_vif,si_vif_reverse)
-  names(final_lst) <- c("vif_calc", "vif_index", "si_vif","si_vif_reverse")
+  si_vif_standardized <- si_vif/(sum(si_vif))
+  si_vif_adj <- we/sum(we)
+  row.names(si_vif_adj) <- NULL
+  row.names(si_vif_standardized) <- NULL
+  final_lst <- list(vif_calc,vif_index, si_vif_standardized,si_vif_adj)
+  names(final_lst) <- c("vif_calc", "vif_index", "si_vif_standardized","si_vif_adj_standardized")
   return(final_lst)
 }

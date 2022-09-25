@@ -29,9 +29,8 @@ ci_optimizer <- function(x)
 
   heq1 <- function(w_w) sum(w_w) - 1
   x0 <- rep(1/d, d)
-  x0 <- c(0.1666667, 0.1666667, 0.1666667,0.1666667,0.1666667,0.1666667)
-  lb <- c(0.001,0.001,0.001,0.001,0.001,0.001)
-  ub <- c(0.999,0.999,0.999,0.999,0.999,0.999)
-  res <- fmincon(x0, objective_function, lb = lb, ub = ub, heq = Aeq1)
+  lb <- rep(0.0001,d)
+  ub <- rep(0.9999,d)
+  res <- fmincon(x0, objective_function, lb = lb, ub = ub, heq = Aeq1,tol = 1e-04)
   return(res)
 }
