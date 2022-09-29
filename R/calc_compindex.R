@@ -6,6 +6,7 @@ calc_compindex <- function(x,avg_type = "simple",vif_threshold = 4.5)
 
   #TODO: Add Si calculation after optimization and also add while loop to run optimization
   #gives equal Sis
-
+ #TODO: Add Si calculation after optimization and also add while loop to run optimization
+  #gives equal Sis
 
 }
