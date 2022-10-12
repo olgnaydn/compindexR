@@ -15,7 +15,7 @@ calc_compindex <- function(x,avg_type = "simple",vif_threshold = 4.5, si_diff = 
   # Controlling Si values for the optimization loop
   upper_threshold <- 1 + si_diff
   lower_threshold <- 1 - si_diff
-  any(si >= (mean(si))*lower_threshold || si <= (mean(si))*upper_threshold)
+  any(si >= (mean(si))*lower_threshold || si <= (mean(si))*upper_threshold) == TRUE
 
 
 }
