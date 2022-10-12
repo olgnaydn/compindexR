@@ -1,4 +1,4 @@
-calc_compindex <- function(x,avg_type = "simple",vif_threshold = 4.5,ratio_si = 0.1)
+calc_compindex <- function(x,avg_type = "simple",vif_threshold = 4.5, si_diff = 0.1)
 {
 
   initial_si <- si_linear_exc_vif(cel4_adjusted,avg_type = "simple",vif_threshold = 4.5)
@@ -13,8 +13,8 @@ calc_compindex <- function(x,avg_type = "simple",vif_threshold = 4.5,ratio_si = 
   # Run optimization without taking VIF into account, user should be able to decide on this.
 
   # Controlling Si values for the optimization loop
-  upper_threshold <- 1 + ratio_si
-  lower_threshold <- 1 - ratio_si
+  upper_threshold <- 1 + si_diff
+  lower_threshold <- 1 - si_diff
   any(si >= (mean(si))*lower_threshold || si <= (mean(si))*upper_threshold)
 
 
