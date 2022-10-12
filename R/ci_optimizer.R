@@ -26,13 +26,13 @@ ci_optimizer <- function(x)
 
     return(s_d_mse)
   }
-
+  mat_rep <- dim(x)[2]
   heq1 <- function(w_w) sum(w_w) - 1
-  Aeq1 <- t(as.matrix(rep(1,d)))
+  Aeq1 <- t(as.matrix(rep(1,mat_rep)))
   beq1 <- 1
-  x0 <- rep(1/d, d)
-  lb <- rep(0.0001,d)
-  ub <- rep(0.9999,d)
+  x0 <- rep(1/mat_rep, mat_rep)
+  lb <- rep(0.0001,mat_rep)
+  ub <- rep(0.9999,mat_rep)
   res <- fmincon(x0, objective_function, lb = lb, ub = ub, Aeq = Aeq1,beq = beq1,tol = 1e-04)
   return(res)
 }
