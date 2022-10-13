@@ -18,7 +18,7 @@ library(ciaor)
 ```
 
 
-## Having the new version of the package using Github Desktop
+## Installing the package using Github Desktop
 
 - Please install Github Desktop
 - Clone the repository
