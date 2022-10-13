@@ -1,18 +1,20 @@
-calc_compindex <- function(x,avg_type = "simple",vif_threshold = NULL, si_diff = 0.1, iteration =10)
+calc_compindex <- function(x,avg_type = "simple",scaling_method = "min-max", vif_threshold = NULL, si_diff = 0.1, iteration =10)
 {
   # Controlling Si values for the optimization loop
   upper_threshold <- 1 + si_diff
   lower_threshold <- 1 - si_diff
 
+  x_scaled <- scaling(x, method = scaling_method)
+
   if(is.null(vif_threshold))
   {
-    x_new_ini <- x
+    x_new_ini <- x_scaled
     we_opt_ini <-ci_optimizer(x_new_ini)
 
   }else
     {
-    si_ini <- si_linear_exc_vif(x,avg_type = avg_type,vif_threshold = vif_threshold)
-    x_new_ini <- x[,-c(si_ini$vif_index)]
+    si_ini <- si_linear_exc_vif(x_scaled,avg_type = avg_type,vif_threshold = vif_threshold)
+    x_new_ini <- x_scaled[,-c(si_ini$vif_index)]
     we_opt_ini <-ci_optimizer(x_new_ini)
     }
 
@@ -62,19 +64,22 @@ calc_compindex <- function(x,avg_type = "simple",vif_threshold = NULL, si_diff =
         r_2 <- m_s$r.squared
         si_calc <- rbind(si_calc,r_2)
       }
+      row.names(si_calc) <- NULL
+      si<- si_calc
+      x_excluded <- rbind(x_excluded,ind_exclude)
 
-    row.names(si_calc) <- NULL
-    si<- si_calc
-    x_excluded <- rbind(x_excluded,ind_exclude)
     }
+
   row.names(x_excluded) <- NULL
   iteration <- i
-  ci <- sort(y_new,decreasing = TRUE)
-  final_lst <- list(iteration, x_excluded, weight_mat,si,x_new_mat,ci)
+  weight_mat <- as.matrix(we_opt_new$par)
+  ci <- as.matrix(x[,colnames(x_new)]) %*% weight_mat
+  ci_sorted <- sort(ci,decreasing = TRUE)
+
+  final_lst <- list(iteration, x_excluded, weight_mat,si,x_new,ci_sorted)
   names(final_lst) <- c("no_of_iteration","x_excluded","final_weights","final_si","final_x","ci")
 
   return(final_lst)
-
   }
 
 

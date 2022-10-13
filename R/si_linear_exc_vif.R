@@ -1,8 +1,7 @@
-si_linear_exc_vif <- function(x,avg_type = "simple",vif_threshold = 4.5)
+si_linear_exc_vif <- function(x,avg_type = "simple", vif_threshold = 4.5)
 {
 
   # calculating composite index (ci)
-
   y<- calc_average(x,avg_type)
 
   # creating regression model using all the inputs and calculating VIF
