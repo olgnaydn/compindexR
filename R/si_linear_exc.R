@@ -20,7 +20,10 @@ si_linear_exc <- function(x,avg_type = "simple")
     s_i_exc <- rbind(s_i_exc,r_2)
   }
 
-  colnames(s_i_exc) <- "s_i_exc"
+  colnames(s_i_exc) <- NULL
   row.names(s_i_exc) <- NULL
-  return(s_i_exc)
+  si_standardized <-s_i_exc/sum(s_i_exc)
+  final_lst <- list(s_i_exc,si_standardized)
+  names(final_lst) <- c("si","si_standardized")
+  return(final_lst)
 }
