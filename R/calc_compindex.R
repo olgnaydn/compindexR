@@ -73,6 +73,8 @@ calc_compindex <- function(x, avg_type = "simple", scaling_method = "min-max", v
   row.names(x_excluded) <- NULL
   iteration <- i
   weight_mat <- as.matrix(we_opt_new$par)
+
+  #calculating final ci added.
   ci <- as.matrix(x[,colnames(x_new)]) %*% weight_mat
   ci_sorted <- sort(ci,decreasing = TRUE)
 
