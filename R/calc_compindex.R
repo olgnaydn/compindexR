@@ -1,4 +1,4 @@
-calc_compindex <- function(x,avg_type = "simple",scaling_method = "min-max", vif_threshold = NULL, si_diff = 0.1, iteration =10)
+calc_compindex <- function(x, avg_type = "simple", scaling_method = "min-max", vif_threshold = NULL, si_diff = 0.1, iteration =10)
 {
   # Controlling Si values for the optimization loop
   upper_threshold <- 1 + si_diff
