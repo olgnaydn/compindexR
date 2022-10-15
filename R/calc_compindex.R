@@ -16,6 +16,8 @@ calc_compindex <- function(x, avg_type = "simple", scaling_method = "min-max", v
     si_ini <- si_linear_exc_vif(x_scaled,avg_type = avg_type,vif_threshold = vif_threshold)
     x_new_ini <- x_scaled[,-c(si_ini$vif_index)]
     we_opt_ini <-ci_optimizer(x_new_ini)
+    #TODO: Add x_excluded here to make sure that variables excluded
+    # because of VIF are visible in the output
     }
 
   x_new_mat_ini <- as.matrix(x_new_ini)
