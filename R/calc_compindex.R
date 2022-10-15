@@ -43,6 +43,7 @@ calc_compindex <- function(x, avg_type = "simple", scaling_method = "min-max", v
       {
 
       ind_exclude <- which(si==max(si))
+      col_excluded <- colnames(x_new[ind_exclude])
       x_new <- x_new[-c(ind_exclude)]
 
       x_new_mat <- as.matrix(x_new)
@@ -64,7 +65,7 @@ calc_compindex <- function(x, avg_type = "simple", scaling_method = "min-max", v
       }
       row.names(si_calc) <- NULL
       si<- si_calc
-      x_excluded <- rbind(x_excluded,ind_exclude)
+      x_excluded <- rbind(x_excluded,col_excluded)
       #print(paste("Calculating weights, iteartion:",i,sep=""))
       if(all(si >= mean(si)*lower_threshold) == TRUE) break
     }
