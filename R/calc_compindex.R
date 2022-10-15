@@ -42,8 +42,6 @@ calc_compindex <- function(x, avg_type = "simple", scaling_method = "min-max", v
     for(i in 1: iteration)
       {
 
-      if(any(si >= (mean(si))*lower_threshold && si <= (mean(si))*upper_threshold) == TRUE) break
-
       ind_exclude <- which(si==max(si))
       x_new <- x_new[-c(ind_exclude)]
 
@@ -67,18 +65,19 @@ calc_compindex <- function(x, avg_type = "simple", scaling_method = "min-max", v
       row.names(si_calc) <- NULL
       si<- si_calc
       x_excluded <- rbind(x_excluded,ind_exclude)
-
+      #print(paste("Calculating weights, iteartion:",i,sep=""))
+      if(all(si >= mean(si)*lower_threshold) == TRUE) break
     }
 
   row.names(x_excluded) <- NULL
   iteration <- i
-  weight_mat <- as.matrix(we_opt_new$par)
+  #weight_mat <- as.matrix(we_opt_new$par)
 
-  #calculating final ci added.
+  #calculating final ci
   ci <- as.matrix(x[,colnames(x_new)]) %*% weight_mat
   ci_sorted <- sort(ci,decreasing = TRUE)
 
-  final_lst <- list(iteration, x_excluded, weight_mat,si,x_new,ci_sorted)
+  final_lst <- list(iteration, x_excluded, weight_mat,si,colnames(x_new),ci_sorted)
   names(final_lst) <- c("no_of_iteration","x_excluded","final_weights","final_si","final_x","ci")
 
   return(final_lst)
