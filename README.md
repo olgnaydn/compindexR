@@ -40,7 +40,7 @@ library(readxl)
 ```
 - From data folder, import the excel file which is called `cel4_adjusted.xlsx`.
 ```
-x <- read_xlsx("data/cel4_adjusted.xlsx")
+x <- read_xlsx("data/cel 10.xlsx")
 ```
 - Run the following command to calculate composite indicator. Following command will allow you to choose average type as a arithmetic average, tolerance for Si calculation as 0.05, number of iterations to get Si as close to each other as possible, set VIF threshold. 
 
