@@ -22,8 +22,8 @@ si_linear_exc <- function(x,avg_type = "simple")
 
   colnames(s_i_exc) <- NULL
   row.names(s_i_exc) <- NULL
-  si_standardized <-s_i_exc/sum(s_i_exc)
-  final_lst <- list(s_i_exc,si_standardized)
-  names(final_lst) <- c("si","si_standardized")
+  si_normalized <-s_i_exc/sum(s_i_exc)
+  final_lst <- list(s_i_exc,si_normalized)
+  names(final_lst) <- c("si","si_normalized")
   return(final_lst)
 }

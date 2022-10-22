@@ -35,12 +35,12 @@ si_linear_exc_vif <- function(x,avg_type = "simple", vif_threshold = 4.5)
     w <- 1 - r_2
     we <- rbind(we,w)
   }
-  si_standardized <- si_vif/(sum(si_vif))
+  si_normalized <- si_vif/(sum(si_vif))
   si_adj <- we/sum(we)
   row.names(si_vif) <- NULL
   row.names(si_adj) <- NULL
   row.names(si_standardized) <- NULL
-  final_lst <- list(vif_calc,vif_index,si_vif, si_standardized,si_adj)
-  names(final_lst) <- c("vif_calc", "vif_index","si", "si_standardized","si_adj")
+  final_lst <- list(vif_calc,vif_index,si_vif, si_normalized,si_adj)
+  names(final_lst) <- c("vif_calc", "vif_index","si", "si_normalized","si_adj")
   return(final_lst)
 }

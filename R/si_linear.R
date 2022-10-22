@@ -20,8 +20,10 @@ for (i in 1:d)
 }
 
 row.names(s_i) <- NULL
-colnames(s_i) <- "s_i"
-return(s_i)
+si_normalized <-s_i/sum(s_i)
+colnames(s_i) <- "si"
+
+return(list(s_i,si_normalized))
 }
 
 

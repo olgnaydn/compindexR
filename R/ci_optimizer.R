@@ -22,7 +22,7 @@ ci_optimizer <- function(x)
        s_d <- as.data.frame(rep(w_d,d))
        s_i_norm <- s_i/sum(s_i)
 
-       s_d_mse <- sum((s_i - s_d)^2)
+       s_d_mse <- sum((s_i_norm - s_d)^2)
 
     return(s_d_mse)
   }
