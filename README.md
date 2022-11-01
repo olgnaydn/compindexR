@@ -33,8 +33,7 @@ calc_compindex(x,
               avg_type = "simple", 
               scaling_method = "min-max", 
               vif_threshold = NULL, 
-              si_diff = 0.1, 
-              iteration =10
+              si_diff = 0.005
               )
 ```
 
