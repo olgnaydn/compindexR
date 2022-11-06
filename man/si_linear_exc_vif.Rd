@@ -9,7 +9,9 @@ si_linear_exc_vif(x, avg_type = "simple", vif_threshold = 4.5)
 \arguments{
 \item{x}{A Dataframe}
 
-\item{avg_type}{Threshold for VIF. Based on this threshold variables from input data (x) are excluded for the calculations.}
+\item{avg_type}{Choosing average type. So far "simple", "geometric" and "harmonic" average are availableç}
+
+\item{vif_threshold}{Threshold for VIF. Based on this threshold variables from input data (x) are excluded for the calculations.}
 }
 \value{
 A data frame
