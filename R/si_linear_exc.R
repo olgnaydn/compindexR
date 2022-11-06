@@ -1,3 +1,17 @@
+#' Calculate Si using linear method by excluding Xi
+#'
+#' @name si_linear_exc
+#'
+#' @description Calculate Si using linear method by excluding Xi at each iteration while calculating Si
+#'
+#' @param x A Dataframe
+#' @param avg_type Choosing average type. So far "simple", "geometric" and "harmonic" average are availableç
+#'
+#' @return A data frame
+#'
+#' @examples
+#' si_linear_exc(x,avg_type = "simple")
+
 si_linear_exc <- function(x,avg_type = "simple")
 {
   # calculating composite index (ci)

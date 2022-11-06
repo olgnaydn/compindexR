@@ -1,3 +1,17 @@
+#' Optmization algorithm based on fmincon
+#'
+#' @name ci_optimizer
+#'
+#' @description Optmization algorithm based on fmincon
+#'
+#' @param x A Dataframe
+#'
+#' @return A data frame
+#'
+#' @examples
+#' ci_optimizer(x)
+
+
 ci_optimizer <- function(x)
 {
 

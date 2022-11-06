@@ -1,3 +1,18 @@
+#' Normalization and standardization techniques
+#'
+#' @name scaling
+#'
+#' @description Normalization and standardization techniques
+#'
+#' @param x A Dataframe
+#' @param method Standardization or normalization technique. So far "min-max" and "standardization" are available
+#'
+#' @return A data frame
+#'
+#' @examples
+#' si_linear_exc(x,avg_type = "simple")
+
+
 scaling <- function(x, method = "min-max")
 
 {

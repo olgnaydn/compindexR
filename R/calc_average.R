@@ -1,3 +1,18 @@
+#' Calculate averages
+#'
+#' @name calc_average
+#'
+#' @description Calculate different types of averages
+#'
+#' @param x A Dataframe
+#' @param avg_type Choosing average type. So far "simple", "geometric" and "harmonic" average are availableç
+#'
+#' @return A data frame
+#'
+#' @examples
+#' calc_average(x,avg_type = "simple")
+
+
 calc_average <- function(x,avg_type = "simple")
 {
   # calculating composite index (ci)

@@ -1,3 +1,19 @@
+#' Calculate Si using linear method by excluding Xi using VIF
+#'
+#' @name si_linear_exc_vif
+#'
+#' @description Calculate Si using linear method by excluding Xi using VIF
+#'
+#' @param x A Dataframe
+#' @param avg_type Choosing average type. So far "simple", "geometric" and "harmonic" average are availableç
+#' @param avg_type Threshold for VIF. Based on this threshold variables from input data (x) are excluded for the calculations.
+#'
+#' @return A data frame
+#'
+#' @examples
+#' si_linear_exc_vif(x,avg_type = "simple", vif_threshold = 4.5)
+
+
 si_linear_exc_vif <- function(x,avg_type = "simple", vif_threshold = 4.5)
 {
 

@@ -1,3 +1,18 @@
+#' Calculate Si using linear method
+#'
+#' @name si_linear
+#'
+#' @description Calculate Si using linear method
+#'
+#' @param x A Dataframe
+#' @param avg_type Choosing average type. So far "simple", "geometric" and "harmonic" average are availableç
+#'
+#' @return A data frame
+#'
+#' @examples
+#' si_linear(x,avg_type = "simple")
+
+
 si_linear <- function(x,avg_type = "simple")
 {
 
