@@ -1,6 +1,6 @@
 Package: ciaor
 Type: Package
-Title: Calculates composite index 
+Title: An R package for calculating composite indicators
 Version: 0.1.0
 Author: Olgun Aydin, Marta Kuc-Czernecka, Michal Pietrzak
 Maintainer: Olgun Aydin <olgun.aydin@pg.edu.pl>
