@@ -20,43 +20,39 @@ si_linear_exc_vif <- function(x,avg_type = "simple", vif_threshold = 4.5)
   # calculating composite index (ci)
   y<- calc_average(x,avg_type)
 
+
   # creating regression model using all the inputs and calculating VIF
   m <- lm(y$ci~.,data=x)
   suppressWarnings({ vif_calc <- vif(m) })
 
   #TODO: Add range for VIF
 
-  vif_index <- which(as.matrix(vif_calc)>vif_threshold)
+  vif_index <- which(as.matrix(vif_calc) > vif_threshold)
+  vif_above_threshold <- vif_calc[vif_index]
 
-  if(length(vif_index)!=0)
+  if(length(vif_index) != 0)
   {
-    x_new <- x[-vif_index]
+    x_n <- x[-vif_index]
   }else
     {
-      x_new <- x
+      x_n <- x
     }
-  y_new<- calc_average(x_new,avg_type)
-  d <- dim(x_new)[2]
-  si_vif <- NULL
-  we <- NULL
+  #y_n<- calc_average(x_n,avg_type)
+  d <- dim(x_n)[2]
+  si <- NULL
 
-  for (i in 1:d)
-  {
-    xx <- x_new[,-i]
-    #y<- calc_average(xx,avg_type)
-    m_i <- lm(y_new$ci~as.matrix(xx))
-    m_s <- summary(m_i)
-    r_2 <- m_s$r.squared
-    si_vif <- rbind(si_vif,r_2)
-    w <- 1 - r_2
-    we <- rbind(we,w)
-  }
-  si_normalized <- si_vif/(sum(si_vif))
-  si_adj <- we/sum(we)
-  row.names(si_vif) <- NULL
-  row.names(si_adj) <- NULL
-  row.names(si_standardized) <- NULL
-  final_lst <- list(vif_calc,vif_index,si_vif, si_normalized,si_adj)
-  names(final_lst) <- c("vif_calc", "vif_index","si", "si_normalized","si_adj")
+    for (i in 1:d)
+    {
+      m <- lm(y$ci~as.matrix(x[,i]))
+      m_s <- summary(m)
+      r_2 <- m_s$r.squared
+      si <- rbind(si,r_2)
+    }
+  si_normalized <- si/(sum(si))
+  row.names(si) <- NULL
+  row.names(si_normalized) <- NULL
+
+  final_lst <- list(vif_calc,vif_index, si, si_normalized)
+  names(final_lst) <- c("vif_calc", "vif_index","si", "si_normalized")
   return(final_lst)
 }

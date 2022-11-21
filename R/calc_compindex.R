@@ -26,20 +26,9 @@ calc_compindex <- function(x, avg_type = "simple", scaling_method = "min-max", v
 
   x_scaled <- scaling(x, method = scaling_method)
 
-  if(is.null(vif_threshold))
-  {
-    x_new_ini <- x_scaled
-    si_ini <- si_linear(x_new_ini,avg_type = "simple")
-    we_opt_ini <-ci_optimizer(x_new_ini)
-
-  }else
-    {
-    si_ini <- si_linear_exc_vif(x_scaled,avg_type = avg_type,vif_threshold = vif_threshold)
-    x_new_ini <- x_scaled[,-c(si_ini$vif_index)]
-    we_opt_ini <-ci_optimizer(x_new_ini)
-    #TODO: Add x_excluded here to make sure that variables excluded
-    # because of VIF are visible in the output
-    }
+  x_new_ini <- x_scaled
+  si_ini <- si_linear(x_new_ini,avg_type = "simple")
+  we_opt_ini <-ci_optimizer(x_new_ini)
 
   weight_all <- NULL
   x_all <- NULL
@@ -77,6 +66,7 @@ calc_compindex <- function(x, avg_type = "simple", scaling_method = "min-max", v
   }
 
   x_new <- x_new_ini
+  y_new <- y_new_ini
   x_excluded <- NULL
 
   for(i in 1: iteration)
@@ -86,9 +76,55 @@ calc_compindex <- function(x, avg_type = "simple", scaling_method = "min-max", v
 
       if(all(between(si_normalized,lower_threshold,upper_threshold))==TRUE) break
 
+
+      if(is.null(vif_threshold))
+      {
       ind_exclude <- which(si_normalized==min(si_normalized))[1]
-      col_excluded <- colnames(x_new[ind_exclude])
-      x_new <- x_new[-c(ind_exclude)]
+      }else
+      {
+        opt_si <- 1/dim(x_new)[2]
+        ind_exclude_cand <-which((si_normalized < opt_si) | (si_normalized > opt_si))
+        print("opt_si")
+        print(opt_si)
+        print("si_normalized")
+        print(si_normalized)
+        print("ind_exclude_cand")
+        print(ind_exclude_cand)
+
+        d_new <- data.frame(y_new,x_new)
+        m  <- lm(d_new$y_new~.,data=d_new)
+        suppressWarnings({ vif_calc <- vif(m) })
+        vif_index <- which(as.matrix(vif_calc) > vif_threshold)
+
+        print("vif_index")
+        print(vif_index)
+
+        id_check <- NULL
+
+        if(isempty(vif_index))
+        {
+          x_new<- x_new
+        }
+          else
+          {
+        for (vd in 1:length(vif_index))
+        {
+          for(id in 1:length(ind_exclude_cand))
+          {
+            if(ind_exclude_cand[id] == vif_index[vd])
+            {
+              id_check <- cbind(id_check, ind_exclude_cand[id])
+            }
+          }
+        }
+          ind_exclude <- as.vector(id_check)
+          col_excluded <- colnames(x_new[ind_exclude])
+          x_new <- x_new[-c(ind_exclude)]
+        }
+
+        print("ind_exclude")
+        print(ind_exclude)
+      }
 
       # appending all x which are not thrown
       x_all <- append(x_all,list(data.frame(x_new)))
