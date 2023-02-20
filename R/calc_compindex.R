@@ -1,9 +1,6 @@
 calc_compindex <- function(x, avg_type = "simple", scaling_method = "min-max", vif_threshold = NULL, si_diff = 0.1)
 {
 
-  upper_threshold <- (1/dim(x)[2])+si_diff
-  lower_threshold <- (1/dim(x)[2])-si_diff
-
   iteration <- dim(x)[2]-2
 
   x_scaled <- scaling(x, method = scaling_method)
@@ -53,9 +50,13 @@ calc_compindex <- function(x, avg_type = "simple", scaling_method = "min-max", v
   si_all <- append(si_all,list("si_initial" = data.frame(si_ini)))
   si_all <- append(si_all,list("si0" = data.frame(si,si_normalized)))
 
+  upper_threshold <- (1/dim(x_new_ini)[2])+si_diff
+  lower_threshold <- (1/dim(x_new_ini)[2])-si_diff
+
   if(all(between(si_normalized,lower_threshold,upper_threshold))==TRUE)
   {
     we_opt_new <-  we_opt_ini
+    iter <- 1
   }
 
   x_new <- x_new_ini
@@ -69,8 +70,11 @@ calc_compindex <- function(x, avg_type = "simple", scaling_method = "min-max", v
     if(all(between(si_normalized,lower_threshold,upper_threshold))==TRUE) break
 
     ind_exclude <- which(si_normalized==min(si_normalized))[1]
+    print(ind_exclude)
     col_excluded <- colnames(x_new[ind_exclude])
+    print(col_excluded)
     x_new <- x_new[-c(ind_exclude)]
+    print(x_new)
 
     # appending all x which are not thrown
     x_all <- append(x_all,list(data.frame(x_new)))
@@ -110,7 +114,6 @@ calc_compindex <- function(x, avg_type = "simple", scaling_method = "min-max", v
     si_all <- append(si_all,list(data.frame(si,si_normalized)))
     names(si_all)[i+2] <- name_of_si_list
   }
-
   row.names(x_excluded) <- NULL
   weight_mat <- as.matrix(we_opt_new$par)
 
