@@ -38,7 +38,7 @@ row.names(s_i) <- NULL
 si_normalized <-s_i/sum(s_i)
 colnames(s_i) <- "si"
 
-return(data.frame(s_i,si_normalized))
+return(list(s_i,si_normalized))
 }
 
 

@@ -8,9 +8,20 @@ calc_compindex <- function(x, avg_type = "simple", scaling_method = "min-max", v
 
   x_scaled <- scaling(x, method = scaling_method)
 
-  x_new_ini <- x_scaled
-  si_ini <- si_linear(x_new_ini,avg_type = "simple")
-  we_opt_ini <-ci_optimizer(x_new_ini)
+  if(is.null(vif_threshold))
+  {
+    x_new_ini <- x_scaled
+    si_ini <- si_linear(x_new_ini,avg_type = "simple")
+    we_opt_ini <-ci_optimizer(x_new_ini)
+
+  }else
+  {
+    si_ini <- si_linear_exc_vif(x_scaled,avg_type = avg_type,vif_threshold = vif_threshold)
+    x_new_ini <- x_scaled[,-c(si_ini$vif_index)]
+    we_opt_ini <-ci_optimizer(x_new_ini)
+    #TODO: Add x_excluded here to make sure that variables excluded
+    # because of VIF are visible in the output
+  }
 
   weight_all <- NULL
   x_all <- NULL
@@ -48,104 +59,57 @@ calc_compindex <- function(x, avg_type = "simple", scaling_method = "min-max", v
   }
 
   x_new <- x_new_ini
-  y_new <- y_new_ini
   x_excluded <- NULL
 
   for(i in 1: iteration)
-      {
-      upper_threshold <- (1/dim(x_new)[2])+si_diff
-      lower_threshold <- (1/dim(x_new)[2])-si_diff
+  {
+    upper_threshold <- (1/dim(x_new)[2])+si_diff
+    lower_threshold <- (1/dim(x_new)[2])-si_diff
 
-      if(all(between(si_normalized,lower_threshold,upper_threshold))==TRUE) break
+    if(all(between(si_normalized,lower_threshold,upper_threshold))==TRUE) break
 
+    ind_exclude <- which(si_normalized==min(si_normalized))[1]
+    col_excluded <- colnames(x_new[ind_exclude])
+    x_new <- x_new[-c(ind_exclude)]
 
-      if(is.null(vif_threshold))
-      {
-      ind_exclude <- which(si_normalized==min(si_normalized))[1]
-      }else
-      {
-        opt_si <- 1/dim(x_new)[2]
-        ind_exclude_cand <-which((si_normalized < opt_si) | (si_normalized > opt_si))
-        print("opt_si")
-        print(opt_si)
-        print("si_normalized")
-        print(si_normalized)
-        print("ind_exclude_cand")
-        print(ind_exclude_cand)
+    # appending all x which are not thrown
+    x_all <- append(x_all,list(data.frame(x_new)))
+    name_of_xi_list <- paste("x",i,sep="")
+    names(x_all)[i+1] <- name_of_xi_list
 
-        d_new <- data.frame(y_new,x_new)
-        m  <- lm(d_new$y_new~.,data=d_new)
-        suppressWarnings({ vif_calc <- vif(m) })
-        vif_index <- which(as.matrix(vif_calc) > vif_threshold)
+    x_new_mat <- as.matrix(x_new)
+    we_opt_new <- ci_optimizer(x_new_mat)
+    weight_mat <- as.matrix(we_opt_new$par)
 
-        print("vif_index")
-        print(vif_index)
+    # appending all weights
+    weight_all <- append(weight_all,list(data.frame(we_opt_new$par)))
+    name_of_wi_list <- paste("w",i,sep="")
+    names(weight_all)[i+1] <- name_of_wi_list
 
-        id_check <- NULL
+    y_new <- x_new_mat  %*% weight_mat
 
-        if(isempty(vif_index))
-        {
-          x_new<- x_new
-        }
-          else
-          {
-        for (vd in 1:length(vif_index))
-        {
-          for(id in 1:length(ind_exclude_cand))
-          {
-            if(ind_exclude_cand[id] == vif_index[vd])
-            {
-              id_check <- cbind(id_check, ind_exclude_cand[id])
-            }
-          }
-        }
-          ind_exclude <- as.vector(id_check)
-          col_excluded <- colnames(x_new[ind_exclude])
-          x_new <- x_new[-c(ind_exclude)]
-        }
+    d <- dim(x_new)[2]
+    si_calc <- NULL
 
-        print("ind_exclude")
-        print(ind_exclude)
-      }
+    for (j in 1:d)
+    {
+      xx <- x_new
+      m <- lm(y_new~as.matrix(xx[,j]))
+      m_s <- summary(m)
+      r_2 <- round(m_s$r.squared,3)
+      si_calc <- rbind(si_calc,r_2)
+    }
+    row.names(si_calc) <- NULL
+    si<- si_calc
+    si_normalized <- round(si/sum(si),3)
+    x_excluded <- rbind(x_excluded,col_excluded)
+    iter <- i
+    name_of_si_list <- paste("si",i,sep="")
 
-      # appending all x which are not thrown
-      x_all <- append(x_all,list(data.frame(x_new)))
-      name_of_xi_list <- paste("x",i,sep="")
-      names(x_all)[i+1] <- name_of_xi_list
-
-      x_new_mat <- as.matrix(x_new)
-      we_opt_new <- ci_optimizer(x_new_mat)
-      weight_mat <- as.matrix(we_opt_new$par)
-
-      # appending all weights
-      weight_all <- append(weight_all,list(data.frame(we_opt_new$par)))
-      name_of_wi_list <- paste("w",i,sep="")
-      names(weight_all)[i+1] <- name_of_wi_list
-
-      y_new <- x_new_mat  %*% weight_mat
-
-      d <- dim(x_new)[2]
-      si_calc <- NULL
-
-      for (j in 1:d)
-      {
-        xx <- x_new
-        m <- lm(y_new~as.matrix(xx[,j]))
-        m_s <- summary(m)
-        r_2 <- round(m_s$r.squared,3)
-        si_calc <- rbind(si_calc,r_2)
-      }
-      row.names(si_calc) <- NULL
-      si<- si_calc
-      si_normalized <- round(si/sum(si),3)
-      x_excluded <- rbind(x_excluded,col_excluded)
-      iter <- i
-      name_of_si_list <- paste("si",i,sep="")
-
-      # creating lists for si
-      si_all <- append(si_all,list(data.frame(si,si_normalized)))
-      names(si_all)[i+2] <- name_of_si_list
-      }
+    # creating lists for si
+    si_all <- append(si_all,list(data.frame(si,si_normalized)))
+    names(si_all)[i+2] <- name_of_si_list
+  }
 
   row.names(x_excluded) <- NULL
   weight_mat <- as.matrix(we_opt_new$par)
@@ -158,6 +122,4 @@ calc_compindex <- function(x, avg_type = "simple", scaling_method = "min-max", v
   names(final_lst) <- c("no_of_iteration","si_all","x_excluded_all","weights_all","x_all","ci")
 
   return(final_lst)
-  }
-
-
+}
