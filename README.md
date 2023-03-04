@@ -13,12 +13,6 @@ install_github("olgnaydn/compindexR")
 
 ```
 
-### After completing steps above
-
-- Every time on Github Desktop, please click fetch and check whether there are new commits
-- If there are new commits please click PULL to get the latest updates about the package
-- Afterwards, please open the project on RStudio and run the following command to compile the package on your local.
-
 
 ## Example usage of the package.
 
