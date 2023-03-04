@@ -1,18 +1,16 @@
 # compindexR: An R package for calculating composite indicators
 
+The package uses the first-order sensitivity index to measure whether the weights assigned by the creator of the composite indicator match the actual importance of the variables. Moreover, the variance inflation factor (VIF) is used to reduce the set of correlated variables. 
 
+In the case of a discrepancy between the importance and the assigned weight, the script determines weights that allow adjustment of the weights to the variables’ intended impact. If the optimised weights are unable to reflect the desired importance, the highly correlated variables are reduced, taking into account VIF. The final outcome of the script is the calculated value of the composite indicator based on optimal weights and a reduced set of variables, and the linear ordering of the analysed objects.
 
-## Installing the package using Github Desktop
+## Installing compindexR
 
-### Only to do first time
-
-- Please install Github Desktop
-- Clone the repository
-- Open the project
-- Run the following command
 
 ```
-devtools::load_all()
+library(devtools)
+install_github("olgnaydn/compindexR")
+
 ```
 - Now, its ready to use.
 
@@ -87,5 +85,7 @@ $ci
 [17] 0.2926783 0.2895374 0.2892485 0.2790355 0.2612437 0.2400609 0.2359284 0.2343469
 [25] 0.2205606 0.1401317 0.0493719
 ```
+
+
 
 
