@@ -87,11 +87,8 @@ calc_compindex <- function(x, avg_type = "simple", scaling_method = "min-max", v
     if(all(between(si_normalized,lower_threshold,upper_threshold))==TRUE) break
 
     ind_exclude <- which(si_normalized==min(si_normalized))[1]
-    print(ind_exclude)
     col_excluded <- colnames(x_new[ind_exclude])
-    print(col_excluded)
     x_new <- x_new[-c(ind_exclude)]
-    print(x_new)
 
     # appending all x which are not thrown
     x_all <- append(x_all,list(data.frame(x_new)))
