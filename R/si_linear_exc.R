@@ -10,6 +10,7 @@
 #' @return A data frame
 #'
 #' @examples
+#' x <- data.frame(rnorm(20),rnorm(20),rnorm(20),rnorm(20))
 #' si_linear_exc(x,avg_type = "simple")
 
 si_linear_exc <- function(x,avg_type = "simple")

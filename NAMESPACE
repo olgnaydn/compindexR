@@ -4,6 +4,9 @@
 exportPattern(".")
 
 # Import all packages listed as Imports or Depends
-import(car)
+importFrom("car", "vif")
 import(pracma)
+import(NlcOptim)
+import(dplyr)
+importFrom("stats", "lm", "sd")
 

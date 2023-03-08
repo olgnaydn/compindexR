@@ -10,6 +10,8 @@
 #' @return A data frame
 #'
 #' @examples
+#'
+#' x <- data.frame(rnorm(20),rnorm(20),rnorm(20),rnorm(20))
 #' calc_average(x,avg_type = "simple")
 
 

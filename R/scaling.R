@@ -10,7 +10,8 @@
 #' @return A data frame
 #'
 #' @examples
-#' si_linear_exc(x,avg_type = "simple")
+#' x <- data.frame(rnorm(20),rnorm(20),rnorm(20),rnorm(20))
+#' scaling(x,method = "min-max")
 
 
 scaling <- function(x, method = "min-max")

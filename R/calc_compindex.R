@@ -13,7 +13,11 @@
 #' @return A list of lists
 #'
 #' @examples
-#' calc_compindex(x, avg_type = "simple", scaling_method = "min-max", vif_threshold = NULL, si_diff = 0.1)
+#' x <- data.frame(rnorm(20),rnorm(20),rnorm(20),rnorm(20))
+#' calc_compindex(x, avg_type = "simple",
+#' scaling_method = "min-max",
+#'  vif_threshold = NULL,
+#'   si_diff = 0.1)
 
 calc_compindex <- function(x, avg_type = "simple", scaling_method = "min-max", vif_threshold = NULL, si_diff = 0.1)
 {

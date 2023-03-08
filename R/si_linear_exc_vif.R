@@ -6,11 +6,12 @@
 #'
 #' @param x A Dataframe
 #' @param avg_type Choosing average type. So far "simple", "geometric" and "harmonic" average are availableç
-#' @param avg_type Threshold for VIF. Based on this threshold variables from input data (x) are excluded for the calculations.
+#' @param vif_threshold Threshold for VIF. Based on this threshold variables from input data (x) are excluded for the calculations.
 #'
 #' @return A data frame
 #'
 #' @examples
+#' x <- data.frame(rnorm(20),rnorm(20),rnorm(20),rnorm(20))
 #' si_linear_exc_vif(x,avg_type = "simple", vif_threshold = 4.5)
 
 

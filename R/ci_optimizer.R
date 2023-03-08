@@ -9,6 +9,7 @@
 #' @return A data frame
 #'
 #' @examples
+#' x <- data.frame(rnorm(20),rnorm(20),rnorm(20),rnorm(20))
 #' ci_optimizer(x)
 
 

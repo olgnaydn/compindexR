@@ -30,5 +30,9 @@ A list of lists
 Calculates composite indicator by excluding the least significant variable at each step.
 }
 \examples{
-calc_compindex(x, avg_type = "simple", scaling_method = "min-max", vif_threshold = NULL, si_diff = 0.1)
+x <- data.frame(rnorm(20),rnorm(20),rnorm(20),rnorm(20))
+calc_compindex(x, avg_type = "simple",
+scaling_method = "min-max",
+ vif_threshold = NULL,
+  si_diff = 0.1)
 }

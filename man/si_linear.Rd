@@ -18,5 +18,6 @@ A data frame
 Calculate Si using linear method
 }
 \examples{
+x <- data.frame(rnorm(20),rnorm(20),rnorm(20),rnorm(20))
 si_linear(x,avg_type = "simple")
 }

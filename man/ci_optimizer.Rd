@@ -16,5 +16,6 @@ A data frame
 Optmization algorithm based on fmincon
 }
 \examples{
+x <- data.frame(rnorm(20),rnorm(20),rnorm(20),rnorm(20))
 ci_optimizer(x)
 }

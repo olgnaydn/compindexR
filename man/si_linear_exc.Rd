@@ -18,5 +18,6 @@ A data frame
 Calculate Si using linear method by excluding Xi at each iteration while calculating Si
 }
 \examples{
+x <- data.frame(rnorm(20),rnorm(20),rnorm(20),rnorm(20))
 si_linear_exc(x,avg_type = "simple")
 }
