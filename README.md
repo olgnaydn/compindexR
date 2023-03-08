@@ -25,7 +25,8 @@ install_github("olgnaydn/compindexR")
 install.packages(readxl)
 library(readxl)
 ```
-- From data folder, import the excel file which is called `cel4_adjusted.xlsx`.
+- From `inst/data` folder, import the excel file which is called `cell_10.xlsx`
+
 ```
 x <- read_xlsx("data/cel 10.xlsx")
 ```
