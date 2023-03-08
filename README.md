@@ -8,6 +8,7 @@ The final outcome of the script is the calculated value of the composite indicat
 
 ## Installing compindexR
 
+Please make sure that you installed `devtools` package. 
 
 ```
 library(devtools)
