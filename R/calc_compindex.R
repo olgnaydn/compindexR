@@ -6,8 +6,8 @@
 #'
 #' @param x A Dataframe
 #' @param avg_type Choosing average type. So far "simple", "geometric" and "harmonic" average are available
-#' @param scaling_method Standardization or normalization technique. So far "min-max" and "standardization" are available
-#' @param vif_threshold Threshold for VIF. Based on this threshold variables from input data (x) are excluded for the calculations.
+#' @param scaling_method Scaling method selection. So far "min-max" and "standardization" are available
+#' @param vif_based_calc If TRUE, variable with highest VIF is removed at each step. Default value is FALSE
 #' @param si_diff Tolerance for normalized Si calculation. Can be between 0 and 1
 #'
 #' @return A list of lists
@@ -16,30 +16,19 @@
 #' x <- data.frame(rnorm(20),rnorm(20),rnorm(20),rnorm(20))
 #' calc_compindex(x, avg_type = "simple",
 #' scaling_method = "min-max",
-#'  vif_threshold = NULL,
-#'   si_diff = 0.1)
+#' vif_based_calc = F,
+#' si_diff = 0.1)
 
-calc_compindex <- function(x, avg_type = "simple", scaling_method = "min-max", vif_threshold = NULL, si_diff = 0.1)
+calc_compindex <- function(x, avg_type = "simple", scaling_method = "min-max", vif_based_calc=F, si_diff = 0.05)
 {
 
   iteration <- dim(x)[2]-2
 
   x_scaled <- scaling(x, method = scaling_method)
 
-  if(is.null(vif_threshold))
-  {
-    x_new_ini <- x_scaled
-    si_ini <- si_linear(x_new_ini,avg_type = "simple")
-    we_opt_ini <-ci_optimizer(x_new_ini)
-
-  }else
-  {
-    si_ini <- si_linear_exc_vif(x_scaled,avg_type = avg_type,vif_threshold = vif_threshold)
-    x_new_ini <- x_scaled[,-c(si_ini$vif_index)]
-    we_opt_ini <-ci_optimizer(x_new_ini)
-    #TODO: Add x_excluded here to make sure that variables excluded
-    # because of VIF are visible in the output
-  }
+  x_new_ini <- x_scaled
+  si_ini <- si_linear(x_new_ini,avg_type = avg_type)
+  we_opt_ini <-ci_optimizer(x_new_ini)
 
   weight_all <- NULL
   x_all <- NULL
@@ -81,7 +70,9 @@ calc_compindex <- function(x, avg_type = "simple", scaling_method = "min-max", v
   }
 
   x_new <- x_new_ini
+  y_new <- y_new_ini
   x_excluded <- NULL
+  vif_all <- NULL
 
   for(i in 1: iteration)
   {
@@ -90,7 +81,27 @@ calc_compindex <- function(x, avg_type = "simple", scaling_method = "min-max", v
 
     if(all(between(si_normalized,lower_threshold,upper_threshold))==TRUE) break
 
-    ind_exclude <- which(si_normalized==min(si_normalized))[1]
+    if(vif_based_calc==T)
+    {
+      dd<- data.frame(x_new,y_new)
+      m <- lm(y_new~.,data=dd)
+      suppressWarnings({ vif_calc <- vif(m) })
+      ind_exclude <- which(vif_calc==max(vif_calc))[1]
+      print("vif_calc")
+      print(vif_calc)
+      print("ind_exclude")
+      print(ind_exclude)
+
+      # appending vifs
+      vif_all <- append(vif_all,list(data.frame(vif_calc)))
+      name_of_vif_list <- paste("vif",i,sep="")
+      names(vif_all)[i] <- name_of_vif_list
+    }
+    else
+    {
+      ind_exclude <- which(si_normalized==min(si_normalized))[1]
+    }
+
     col_excluded <- colnames(x_new[ind_exclude])
     x_new <- x_new[-c(ind_exclude)]
 
@@ -139,8 +150,8 @@ calc_compindex <- function(x, avg_type = "simple", scaling_method = "min-max", v
   ci <- as.matrix(x[,colnames(x_new)]) %*% weight_mat
   ci_sorted <- sort(ci,decreasing = TRUE)
 
-  final_lst <- list(iter,si_all, x_excluded, weight_all,x_all,ci_sorted)
-  names(final_lst) <- c("no_of_iteration","si_all","x_excluded_all","weights_all","x_all","ci")
+  final_lst <- list(iter,si_all, x_excluded, vif_all, weight_all,x_all,ci_sorted)
+  names(final_lst) <- c("no_of_iteration","si_all","x_excluded_all","vif_all","weights_all","x_all","ci")
 
   return(final_lst)
 }

@@ -8,8 +8,8 @@ calc_compindex(
   x,
   avg_type = "simple",
   scaling_method = "min-max",
-  vif_threshold = NULL,
-  si_diff = 0.1
+  vif_based_calc = F,
+  si_diff = 0.05
 )
 }
 \arguments{
@@ -17,9 +17,9 @@ calc_compindex(
 
 \item{avg_type}{Choosing average type. So far "simple", "geometric" and "harmonic" average are available}
 
-\item{scaling_method}{Standardization or normalization technique. So far "min-max" and "standardization" are available}
+\item{scaling_method}{Scaling method selection. So far "min-max" and "standardization" are available}
 
-\item{vif_threshold}{Threshold for VIF. Based on this threshold variables from input data (x) are excluded for the calculations.}
+\item{vif_based_calc}{If TRUE, variable with highest VIF is removed at each step. Default value is FALSE}
 
 \item{si_diff}{Tolerance for normalized Si calculation. Can be between 0 and 1}
 }
@@ -33,6 +33,6 @@ Calculates composite indicator by excluding the least significant variable at ea
 x <- data.frame(rnorm(20),rnorm(20),rnorm(20),rnorm(20))
 calc_compindex(x, avg_type = "simple",
 scaling_method = "min-max",
- vif_threshold = NULL,
-  si_diff = 0.1)
+vif_based_calc = F,
+si_diff = 0.1)
 }
