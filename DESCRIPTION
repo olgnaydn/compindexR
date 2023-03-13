@@ -8,6 +8,6 @@ Description: The package uses the first-order sensitivity index to measure wheth
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
-URL: https://github.com/olgnaydn/ciaor
+URL: https://github.com/olgnaydn/compindexR
 Depends: R (>= 4.0.0), car (>= 3.1.0), pracma(>= 2.3.8), dplyr(>= 1.0.7), NlcOptim(>= 0.6)
 RoxygenNote: 7.1.1
