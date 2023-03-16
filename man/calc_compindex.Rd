@@ -8,7 +8,7 @@ calc_compindex(
   x,
   avg_type = "simple",
   scaling_method = "min-max",
-  vif_based_calc = F,
+  vif_based_calc = FALSE,
   si_diff = 0.05
 )
 }
@@ -33,6 +33,6 @@ Calculates composite indicator by excluding the least significant variable at ea
 x <- data.frame(rnorm(20),rnorm(20),rnorm(20),rnorm(20))
 calc_compindex(x, avg_type = "simple",
 scaling_method = "min-max",
-vif_based_calc = F,
+vif_based_calc = FALSE,
 si_diff = 0.1)
 }

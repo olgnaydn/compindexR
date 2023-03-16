@@ -16,10 +16,10 @@
 #' x <- data.frame(rnorm(20),rnorm(20),rnorm(20),rnorm(20))
 #' calc_compindex(x, avg_type = "simple",
 #' scaling_method = "min-max",
-#' vif_based_calc = F,
+#' vif_based_calc = FALSE,
 #' si_diff = 0.1)
 
-calc_compindex <- function(x, avg_type = "simple", scaling_method = "min-max", vif_based_calc=F, si_diff = 0.05)
+calc_compindex <- function(x, avg_type = "simple", scaling_method = "min-max", vif_based_calc=FALSE, si_diff = 0.05)
 {
 
   iteration <- dim(x)[2]-2
@@ -81,16 +81,12 @@ calc_compindex <- function(x, avg_type = "simple", scaling_method = "min-max", v
 
     if(all(between(si_normalized,lower_threshold,upper_threshold))==TRUE) break
 
-    if(vif_based_calc==T)
+    if(vif_based_calc==TRUE)
     {
       dd<- data.frame(x_new,y_new)
       m <- lm(y_new~.,data=dd)
       suppressWarnings({ vif_calc <- vif(m) })
       ind_exclude <- which(vif_calc==max(vif_calc))[1]
-      print("vif_calc")
-      print(vif_calc)
-      print("ind_exclude")
-      print(ind_exclude)
 
       # appending vifs
       vif_all <- append(vif_all,list(data.frame(vif_calc)))
