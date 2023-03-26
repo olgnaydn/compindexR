@@ -1,3 +1,8 @@
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/compindexR?color=green)](https://cran.r-project.org/package=compindexR)
+[![](http://cranlogs.r-pkg.org/badges/grand-total/compindexR?color=green)](https://cran.r-project.org/package=compindexR)
+[![](http://cranlogs.r-pkg.org/badges/compindexR?color=green)](https://cran.r-project.org/package=compindexR)
+[![](http://cranlogs.r-pkg.org/badges/last-week/compindexR?color=green)](https://cran.r-project.org/package=compindexR)
+
 # compindexR: An R package for calculating composite indicators
 
 The package uses the first-order sensitivity index to measure whether the weights assigned by the creator of the composite indicator match the actual importance of the variables. Moreover, the variance inflation factor (VIF) is used to reduce the set of correlated variables. 
