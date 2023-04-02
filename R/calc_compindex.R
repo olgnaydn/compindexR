@@ -144,7 +144,9 @@ calc_compindex <- function(x, avg_type = "simple", scaling_method = "min-max", v
 
   #calculating final ci
   ci <- as.matrix(x[,colnames(x_new)]) %*% weight_mat
-  ci_sorted <- sort(ci,decreasing = TRUE)
+  index <- 1:dim(x_new)[1]
+  ranks <- rank(-ci)
+  ci_sorted <- data.frame(ci,ranks)
 
   final_lst <- list(iter,si_all, x_excluded, vif_all, weight_all,x_all,ci_sorted)
   names(final_lst) <- c("no_of_iteration","si_all","x_excluded_all","vif_all","weights_all","x_all","ci")
