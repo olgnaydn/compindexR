@@ -1,7 +1,7 @@
 Package: compindexR
 Type: Package
 Title: Calculates Composite Index 
-Version: 0.1.0
+Version: 0.1.1
 Authors@R: c(
     person("Olgun", "Aydin", email = "olgun.aydin@pg.edu.pl", role = c("cre"),
            comment = c(ORCID = "0000-0002-7090-0931")),
