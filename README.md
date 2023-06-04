@@ -12,7 +12,17 @@ In the case of a discrepancy between the importance and the assigned weight, the
 
 The final outcome of the script is the calculated value of the composite indicator based on optimal weights and a reduced set of variables, and the linear ordering of the analysed objects.
 
-## Installing compindexR
+## Installing compindexR from CRAN
+
+Please use following commands
+
+```
+install.packages("compindexR")
+library(compindexR)
+
+```
+
+## Installing compindexR - development version
 
 Please make sure that you installed `devtools` package. 
 
