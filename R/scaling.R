@@ -32,14 +32,7 @@ scaling <- function(x, method = "min-max")
   }
   else if(method=="standardization")
   {
-    standardization <- function(v)
-    {
-      s_dev <- sd(v)
-      avg <- mean(v)
-      result <- (x - avg) / s_dev
-      return(result)
-    }
-    x_new <- apply(x, 2, standardization)
+    x_new <- as.data.frame(lapply(x, function(x) (x - mean(x, na.rm = TRUE)) / sd(x, na.rm = TRUE)))
   }
   #TODO: Add more normalization methods
 
