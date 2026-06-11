@@ -95,8 +95,6 @@ $ci
 [25] 0.2205606 0.1401317 0.0493719
 ```
 
-## Citation
-
 First presented in uRos 2022
 
 *Aydin, O., Kuc-Czarnecka, M., Pietrzak, M. B. &  (2022). compindexR: An R package for calculating composite indicators. uRos Conference 2022. https://r-project.ro/conference2022/book-of-abstracts-uros2022.pdf*
