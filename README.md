@@ -38,7 +38,7 @@ install_github("olgnaydn/compindexR")
 - Please make sure that you have `readxl` package installed. If its not installed, please install it using following commands
 
 ```
-install.packages(readxl)
+install.packages("readxl"")
 library(readxl)
 ```
 - From `inst/extdata` folder, import the excel file which is called `cell_10.xlsx`
@@ -97,7 +97,7 @@ $ci
 
 ## Citation
 
-First published in uRos 2022. If you use `compindexR` , please cite it.
+First presented in uRos 2022. If you use `compindexR`
 
 *Aydin, O., Kuc-Czarnecka, M., Pietrzak, M. B. &  (2022). compindexR: An R package for calculating composite indicators. uRos Conference 2022. https://r-project.ro/conference2022/book-of-abstracts-uros2022.pdf*
 
