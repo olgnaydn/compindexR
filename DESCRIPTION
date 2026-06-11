@@ -1,7 +1,7 @@
 Package: compindexR
 Type: Package
 Title: Calculates Composite Index 
-Version: 0.1.1
+Version: 0.1.4
 Authors@R: c(
     person("Olgun", "Aydin", email = "olgun.aydin@pg.edu.pl", role = c("cre"),
            comment = c(ORCID = "0000-0002-7090-0931")),
@@ -15,4 +15,4 @@ Encoding: UTF-8
 URL: https://github.com/olgnaydn/compindexR
 BugReports: https://github.com/olgnaydn/compindexR/issues
 Depends: R (>= 4.0.0), car (>= 3.1.0), pracma(>= 2.3.8), dplyr(>= 1.0.7), NlcOptim(>= 0.6)
-RoxygenNote: 7.1.1
+Config/roxygen2/version: 8.0.0
