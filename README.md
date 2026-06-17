@@ -38,7 +38,7 @@ install_github("olgnaydn/compindexR")
 - Please make sure that you have `readxl` package installed. If its not installed, please install it using following commands
 
 ```
-install.packages("readxl"")
+install.packages("readxl")
 library(readxl)
 ```
 - From `inst/extdata` folder, import the excel file which is called `cell_10.xlsx`
